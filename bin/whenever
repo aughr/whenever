@@ -24,6 +24,9 @@ OptionParser.new do |opts|
   opts.on('-u', '--user [user]', 'Default: current user') do |user| 
     options[:user] = user if user
   end
+  opts.on('-e', '--env [environment]', 'Default: production') do |env| 
+    options[:environment] = env if env
+  end
 end.parse!
 
 Whenever::CommandLine.execute(options)

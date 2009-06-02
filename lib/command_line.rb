@@ -8,8 +8,9 @@ module Whenever
     def initialize(options={})
       @options = options
       
-      @options[:file]       ||= 'config/schedule.rb'
-      @options[:identifier] ||= default_identifier
+      @options[:file]        ||= 'config/schedule.rb'
+      @options[:identifier]  ||= default_identifier
+      @options[:environment] ||= :production
       
       unless File.exists?(@options[:file])
         warn("[fail] Can't find file: #{@options[:file]}")
@@ -28,7 +29,7 @@ module Whenever
       elsif @options[:write]
         write_crontab(whenever_cron)
       else
-        puts Whenever.cron(:file => @options[:file])
+        puts Whenever.cron(:file => @options[:file], :environment => @options[:environment])
         exit
       end
     end
@@ -40,7 +41,7 @@ module Whenever
     end
   
     def whenever_cron
-      @whenever_cron ||= [comment_open, Whenever.cron(:file => @options[:file]), comment_close].join("\n")
+      @whenever_cron ||= [comment_open, Whenever.cron(:file => @options[:file], :environment => @options[:environment]), comment_close].join("\n")
     end
     
     def read_crontab

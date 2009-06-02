@@ -5,6 +5,8 @@ module Whenever
       @jobs = Hash.new
       @env  = Hash.new
       
+      @environment = options[:environment]
+      
       config = case options
         when String then options
         when Hash
